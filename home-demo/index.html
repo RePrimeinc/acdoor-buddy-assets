@@ -1,0 +1,123 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ホームからの導線 | ACDOOR</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F7FB;--card:#FFFFFF;--ink:#0D1B34;--ink-2:#33425C;--muted:#64748B;
+--line:#E2E9F2;--line-2:#EEF2F8;--blue-500:#2F7BFF;--blue-600:#2160F0;--blue-700:#1747C9;
+--blue-50:#F2F7FF;--blue-100:#E6F0FF;--mint-500:#22C9B0;--gold:#E8C77A;
+--r:12px;--r-lg:18px;--r-xl:24px;--sh-1:0 1px 2px rgba(13,27,52,.05),0 1px 1px rgba(13,27,52,.03);
+--f-jp:"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+--f-sr:"Noto Serif JP","Hiragino Mincho ProN",serif}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-jp);line-height:1.65;padding:20px 0 40px}
+.wrap{max-width:420px;margin:0 auto;padding:0 16px}
+.lead{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.7}
+.lead b{color:var(--blue-700)}
+
+/* おすすめ求人カード（既存想定） */
+.reco{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:16px;box-shadow:var(--sh-1);margin-bottom:18px}
+.reco .hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.reco .hdr h3{font-size:14px;font-weight:600;flex:1}
+
+/* ★ 相棒アイコン（カード右の余白に配置） */
+.buddy-btn{position:relative;width:46px;height:46px;flex:0 0 46px;border-radius:50%;
+  cursor:pointer;border:2px solid rgba(232,199,122,.55);overflow:hidden;background:#EEF4FF;
+  box-shadow:0 2px 10px -2px rgba(23,71,201,.25);transition:.2s}
+.buddy-btn:hover{transform:scale(1.06);border-color:var(--gold)}
+.buddy-btn img{width:100%;height:100%;object-fit:cover}
+.buddy-btn .badge{position:absolute;top:-2px;right:-2px;width:14px;height:14px;border-radius:50%;
+  background:linear-gradient(120deg,#E8C77A,#F0A6B8);border:2px solid #fff;
+  animation:bpulse 1.9s ease-in-out infinite}
+@keyframes bpulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.22);opacity:.75}}
+
+.job{border-top:1px solid var(--line-2);padding:11px 0;display:flex;gap:10px;align-items:flex-start}
+.job:first-of-type{border-top:0}
+.job .th{width:42px;height:42px;border-radius:9px;background:var(--blue-50);flex:0 0 42px;
+  display:grid;place-items:center;font-size:17px}
+.job .t{font-size:13.5px;font-weight:600;line-height:1.5}
+.job .m{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+/* 比較用の見出し */
+.sect{font-size:11.5px;color:var(--muted);letter-spacing:.08em;margin:26px 0 9px;font-weight:600}
+
+/* ===== 卵のときのゲージ（孵化の促し） ===== */
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:17px;box-shadow:var(--sh-1)}
+.ttl{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:9px}
+.ttl h3{font-size:13.5px;font-weight:600}
+.ttl .meta{font-size:11.5px;color:var(--muted)}
+.bar{height:9px;border-radius:999px;background:var(--line-2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;position:relative;
+  background:linear-gradient(100deg,var(--blue-600),#2F8CFF 45%,var(--mint-500))}
+.bar i::after{content:"";position:absolute;inset:0;border-radius:999px;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  animation:sheen 2.6s ease-in-out infinite}
+@keyframes sheen{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+.note{margin-top:11px;font-size:12.5px;color:var(--ink-2)}
+.note b{color:var(--blue-700)}
+/* 促しの導線 */
+.todo{margin-top:13px;display:grid;gap:8px}
+.todo a{display:flex;align-items:center;gap:9px;padding:11px 13px;border-radius:var(--r);
+  border:1px solid var(--line);background:#FCFDFF;text-decoration:none;color:var(--ink);
+  font-size:13px;transition:.18s}
+.todo a:hover{border-color:var(--blue-100);background:var(--blue-50)}
+.todo .ck{width:19px;height:19px;border-radius:50%;flex:0 0 19px;display:grid;place-items:center;
+  font-size:11px;border:1.5px solid var(--line);color:transparent}
+.todo .done .ck{background:var(--mint-500);border-color:var(--mint-500);color:#fff}
+.todo .done{color:var(--muted)}
+.todo .arrow{margin-left:auto;color:var(--muted);font-size:14px}
+</style></head><body><div class="wrap">
+
+<p class="lead">ホームの「おすすめ求人」カード右上に<b>相棒アイコン</b>を置き、タップで専用ページへ。<br>
+卵のあいだは、ゲージが<b>履歴書・職務経歴書の入力率</b>と連動します。</p>
+
+<div class="sect">① 孵化後（顔アップのアイコン）</div>
+<div class="reco">
+  <div class="hdr">
+    <h3>今日のあなたへのおすすめ求人</h3>
+    <div class="buddy-btn" title="相棒に会いに行く">
+      <img src="face2.png" alt="相棒">
+      <span class="badge"></span>
+    </div>
+  </div>
+  <div class="job"><div class="th">🔧</div><div><div class="t">自動車整備士（国産ディーラー）</div><div class="m">年収 420〜560万円 ・ 土日休み</div></div></div>
+  <div class="job"><div class="th">🚚</div><div><div class="t">大型車整備スタッフ</div><div class="m">年収 450〜600万円 ・ 平日勤務</div></div></div>
+</div>
+
+<div class="sect">② 卵のとき（卵のアイコン）</div>
+<div class="reco">
+  <div class="hdr">
+    <h3>今日のあなたへのおすすめ求人</h3>
+    <div class="buddy-btn" title="たまごを見に行く"><img src="egg.png" alt="たまご"></div>
+  </div>
+  <div class="job"><div class="th">🔧</div><div><div class="t">自動車整備士（国産ディーラー）</div><div class="m">年収 420〜560万円 ・ 土日休み</div></div></div>
+</div>
+
+<div class="sect">③ 卵のときのゲージ（孵化の促し）</div>
+<div class="card">
+  <div class="ttl"><h3>たまごのようす</h3><span class="meta">あと少しで かえりそう</span></div>
+  <div class="bar"><i style="width:45%"></i></div>
+  <p class="note">履歴書と職務経歴書がそろうと、<b>たまごがかえります</b>。</p>
+  <div class="todo">
+    <a href="#" class="done"><span class="ck">✓</span>履歴書をつくる<span class="arrow">›</span></a>
+    <a href="#"><span class="ck">✓</span>職務経歴書をつくる<span class="arrow">›</span></a>
+  </div>
+</div>
+
+<div class="sect">④ 孵化後のゲージ（通常時）</div>
+<div class="card">
+  <div class="ttl"><h3>成長のしるし</h3><span class="meta">育ってきています</span></div>
+  <div class="bar"><i style="width:68%"></i></div>
+  <p class="note" id="growth"></p>
+</div>
+
+</div>
+<script>
+const G=['あなたといっしょに、少しずつ成長しています。','毎日の積み重ねが、この子の力になっています。',
+'あなたと過ごすほど、少しずつ大きくなっていきます。','ゆっくりですが、着実に育っています。',
+'あなたのペースに合わせて、のんびり育っています。','もうすぐ、次のすがたに近づきそうです。',
+'あなたと歩いた日々が、この子を支えています。'];
+document.getElementById('growth').textContent=G[Math.floor(Math.random()*G.length)];
+</script></body></html>

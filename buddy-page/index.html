@@ -1,0 +1,254 @@
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>相棒 | ACDOOR</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4F7FB; --card:#FFFFFF; --ink:#0D1B34; --ink-2:#33425C; --muted:#64748B;
+  --line:#E2E9F2; --line-2:#EEF2F8;
+  --blue-500:#2F7BFF; --blue-600:#2160F0; --blue-700:#1747C9; --blue-50:#F2F7FF; --blue-100:#E6F0FF;
+  --mint-500:#22C9B0; --gold:#E8C77A; --gold-2:#F0D79B;
+  --r-sm:8px; --r:12px; --r-lg:18px; --r-xl:24px;
+  --sh-1:0 1px 2px rgba(13,27,52,.05),0 1px 1px rgba(13,27,52,.03);
+  --sh-3:0 20px 50px -18px rgba(23,71,201,.35);
+  --f-jp:"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  --f-sr:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-jp);padding:0 0 28px;line-height:1.65}
+
+.hd{position:relative;background:rgba(244,247,251,.9);backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line);padding:14px 18px;display:flex;align-items:center;gap:10px}
+.hd .back{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);
+  background:var(--card);display:grid;place-items:center;color:var(--ink-2);font-size:17px;cursor:pointer}
+.hd h1{font-size:16px;font-weight:600;letter-spacing:.02em}
+
+/* ===== 幻想ステージ ===== */
+.stage{position:relative;margin:14px 16px 0;border-radius:var(--r-xl);overflow:hidden;
+  border:1px solid var(--line);box-shadow:var(--sh-1);padding:22px 20px 24px;isolation:isolate}
+/* 背景画像（ランダム切替） */
+.stage .bgimg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;
+  opacity:.5}
+.stage .veil{position:absolute;inset:0;z-index:-1;
+  background:radial-gradient(120% 86% at 50% 6%, rgba(255,255,255,.92) 0%, rgba(248,251,255,.74) 44%, rgba(233,241,255,.6) 100%)}
+
+/* 名前（上） */
+.name{text-align:center;position:relative;z-index:2}
+.name{display:flex;align-items:center;justify-content:center;gap:8px}
+.name h2{font-family:var(--f-sr);font-size:28px;font-weight:600;letter-spacing:.05em}
+.name .pen{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  cursor:pointer;color:var(--muted);font-size:13px;opacity:.7;transition:.2s}
+.name .pen:hover{opacity:1;color:var(--blue-600);background:rgba(242,247,255,.9)}
+/* No.（右上・グラデーションテキスト） */
+.serial{position:absolute;top:16px;right:18px;z-index:3;font-size:12.5px;font-weight:700;
+  letter-spacing:.08em;font-family:var(--f-sr);
+  background:linear-gradient(120deg,#E8C77A 0%,#F0A6B8 55%,#B98CFF 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* キャラクター（中央） */
+.dust{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+.dust span{position:absolute;border-radius:50%;background:#fff;opacity:0}
+.dust .r{animation:rise linear infinite}
+.dust .f{animation:floaty ease-in-out infinite}
+.dust .tw{animation:twinkle ease-in-out infinite}
+@keyframes rise{0%{transform:translateY(24px) scale(.5);opacity:0}
+  14%{opacity:.95}68%{opacity:.6}100%{transform:translateY(-150px) scale(1.15);opacity:0}}
+@keyframes floaty{0%,100%{transform:translate(0,0);opacity:.35}
+  25%{transform:translate(7px,-13px);opacity:.85}
+  50%{transform:translate(-5px,-22px);opacity:.6}
+  75%{transform:translate(9px,-11px);opacity:.8}}
+@keyframes twinkle{0%,100%{opacity:0;transform:scale(.5)}
+  50%{opacity:.95;transform:scale(1.3)}}
+
+.buddy{position:relative;width:min(268px,70vw);aspect-ratio:1;margin:14px auto 0;z-index:2}
+.buddy .orb{position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  -webkit-mask-image:radial-gradient(circle at 50% 50%, #000 56%, rgba(0,0,0,.6) 76%, transparent 97%);
+  mask-image:radial-gradient(circle at 50% 50%, #000 56%, rgba(0,0,0,.6) 76%, transparent 97%)}
+.buddy video{width:100%;height:100%;object-fit:cover;transform:scale(1.04)}
+.buddy .glow{position:absolute;inset:-6%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle at 50% 42%, rgba(255,255,255,.5) 0%, transparent 58%)}
+.pool{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);width:62%;height:16px;
+  border-radius:50%;z-index:-1;
+  background:radial-gradient(closest-side,rgba(232,199,122,.55),transparent 72%);
+  animation:pulse 3.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.7;width:62%}50%{opacity:1;width:68%}}
+
+/* ===== ひとこと（AI生成・1日3回） ===== */
+.greet{margin:16px 16px 0;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--r-lg);padding:15px 17px;box-shadow:var(--sh-1);
+  display:flex;gap:11px;align-items:flex-start}
+.greet .ico{width:40px;height:40px;border-radius:50%;flex:0 0 40px;overflow:hidden;
+  background:#EEF4FF;border:1.5px solid rgba(232,199,122,.5)}
+.greet .ico img{width:100%;height:100%;object-fit:cover}
+.greet .tx{font-size:14px;line-height:1.72}
+.greet .tx .t{font-size:10.5px;color:var(--muted);letter-spacing:.06em;margin-bottom:2px}
+
+/* ===== セクション ===== */
+.sec{margin:20px 16px 0}
+.sec > .ttl{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:9px}
+.sec .ttl h3{font-size:13.5px;font-weight:600;letter-spacing:.03em}
+.sec .ttl .meta{font-size:11.5px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
+  padding:17px;box-shadow:var(--sh-1)}
+.bar{height:9px;border-radius:999px;background:var(--line-2);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;width:68%;position:relative;
+  background:linear-gradient(100deg,var(--blue-600),#2F8CFF 45%,var(--mint-500))}
+.bar i::after{content:"";position:absolute;inset:0;border-radius:999px;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.5),transparent);
+  animation:sheen 2.6s ease-in-out infinite}
+@keyframes sheen{0%{transform:translateX(-100%)}60%,100%{transform:translateX(100%)}}
+.bar-note{margin-top:10px;font-size:12.5px;color:var(--ink-2)}
+.bar-note b{color:var(--blue-700)}
+
+/* モーション */
+.motions{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:10px}
+.mo{aspect-ratio:1;border-radius:var(--r);border:1px solid var(--line);background:var(--card);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  font-size:10.5px;color:var(--muted);box-shadow:var(--sh-1);padding:8px}
+.mo img{width:44px;height:44px;object-fit:contain}
+.mo.on{border-color:rgba(232,199,122,.75);background:linear-gradient(0deg,#FFFDF6,#fff);
+  color:#7A5B18;font-weight:600}
+.mo.lock{opacity:.5}
+.mo.lock img{filter:grayscale(1)}
+
+/* 歩み */
+.steps{position:relative;padding-left:22px}
+.steps::before{content:"";position:absolute;left:6px;top:7px;bottom:7px;width:2px;
+  background:linear-gradient(180deg,var(--gold),var(--blue-500))}
+.step{position:relative;padding:9px 0}
+.step::before{content:"";position:absolute;left:-21px;top:15px;width:11px;height:11px;
+  border-radius:50%;background:var(--card);border:2px solid var(--blue-500)}
+.step.gold::before{border-color:var(--gold);box-shadow:0 0 0 4px rgba(232,199,122,.22)}
+.step .d{font-size:11px;color:var(--muted)}
+.step .t{font-size:13.5px;margin-top:1px}
+
+.share{position:relative;z-index:3;text-align:center;margin-top:16px}
+.share button{display:inline-flex;align-items:center;gap:6px;padding:9px 20px;
+  border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;
+  color:var(--ink-2);background:rgba(255,255,255,.82);border:1px solid var(--line);
+  backdrop-filter:blur(6px);transition:.2s}
+.share button:hover{color:var(--blue-700);border-color:var(--blue-100);
+  background:rgba(242,247,255,.95)}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style></head><body>
+
+<header class="hd"><div class="back">‹</div><h1>相棒</h1></header>
+
+<section class="stage">
+  <div class="bgimg" id="bgimg"></div>
+  <div class="veil"></div>
+  <div class="serial">No.00831</div>
+  <div class="dust" id="dust"></div>
+
+  <div class="name">
+    <h2 id="nm">ひかり</h2>
+    <span class="pen" title="名前を変える">✎</span>
+  </div>
+
+  <div class="buddy">
+    <div class="orb"><video src="buddy.mp4" autoplay loop muted playsinline></video></div>
+    <span class="glow"></span>
+    <span class="pool"></span>
+  </div>
+
+  <div class="share"><button>この子をシェアする</button></div>
+</section>
+
+<!-- AI生成のひとこと（1日3回・時間帯が変わったときだけ生成） -->
+<div class="greet">
+  <span class="ico"><img src="face2.png" alt=""></span>
+  <div class="tx">
+    <div class="t" id="gt">おはよう</div>
+    <div id="gm">諒平さん、おはよう。<br>昨日は遅くまでがんばってたね。<br>今日は無理しなくていいからね。</div>
+  </div>
+</div>
+
+<section class="sec">
+  <div class="ttl"><h3>成長のしるし</h3><span class="meta">育ってきています</span></div>
+  <div class="card">
+    <div class="bar"><i></i></div>
+    <p class="bar-note" id="growth"></p>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="ttl"><h3>おぼえたしぐさ</h3><span class="meta">3 / 6</span></div>
+  <div class="motions">
+    <div class="mo on"><img src="ic/sleep.png" alt="">ねむる</div>
+    <div class="mo on"><img src="ic/joy.png" alt="">よろこぶ</div>
+    <div class="mo on"><img src="ic/watch.png" alt="">みまもる</div>
+    <div class="mo lock"><img src="ic/lock.png" alt="">とびはねる</div>
+    <div class="mo lock"><img src="ic/lock.png" alt="">かけだす</div>
+    <div class="mo lock"><img src="ic/lock.png" alt="">まいあがる</div>
+  </div>
+</section>
+
+<section class="sec">
+  <div class="ttl"><h3>いっしょに歩いた道</h3></div>
+  <div class="card"><div class="steps">
+    <div class="step gold"><div class="d">10月12日</div><div class="t">卵がとどきました</div></div>
+    <div class="step gold"><div class="d">10月18日</div><div class="t">「ひかり」と名づけました</div></div>
+    <div class="step"><div class="d">10月24日</div><div class="t">はじめての応募をいっしょに</div></div>
+    <div class="step gold"><div class="d">10月29日</div><div class="t">すがたが変わりました</div></div>
+  </div></div>
+</section>
+
+<script>
+// 背景をランダムに選ぶ（全ユーザー共通の固定素材／毎回生成しない）
+const BGS=['bg/forest.png','bg/lake.png','bg/dawn.png'];
+document.getElementById('bgimg').style.backgroundImage=
+  `url("${BGS[Math.floor(Math.random()*BGS.length)]}")`;
+
+// 光の粒
+const d=document.getElementById('dust');
+const mk=(cls,n,dur,szMin,szMax)=>{
+  for(let i=0;i<n;i++){
+    const s=document.createElement('span');
+    s.className=cls;
+    s.style.left=(3+Math.random()*94)+'%';
+    s.style.top=(8+Math.random()*88)+'%';
+    s.style.animationDelay=(Math.random()*dur)+'s';
+    s.style.animationDuration=(dur*0.7+Math.random()*dur*0.6)+'s';
+    const sz=szMin+Math.random()*(szMax-szMin);
+    s.style.width=s.style.height=sz+'px';
+    s.style.background='#FFFFFF';
+    s.style.boxShadow='0 0 '+(4+Math.random()*7)+'px rgba(255,255,255,.95)';
+    d.appendChild(s);
+  }
+};
+mk('r',26,8,1.6,4.2);   // 舞い上がる
+mk('f',20,7,1.4,3.4);   // ゆらめく
+mk('tw',22,3.2,1.2,2.8);// またたく
+
+/* 成長のしるし：テンプレートからランダム表示
+   （具体的な条件を書かないことで、育成アルゴリズムを推測されないようにする） */
+const GROWTH=[
+  'あなたといっしょに、少しずつ成長しています。',
+  '毎日の積み重ねが、この子の力になっています。',
+  'あなたと過ごすほど、少しずつ大きくなっていきます。',
+  'ゆっくりですが、着実に育っています。',
+  'あなたのペースに合わせて、のんびり育っています。',
+  'もうすぐ、次のすがたに近づきそうです。',
+  'あなたと歩いた日々が、この子を支えています。'
+];
+document.getElementById('growth').textContent =
+  GROWTH[Math.floor(Math.random()*GROWTH.length)];
+
+/* === 挨拶の生成ロジック（実装イメージ） ===
+   localStorage に「最後に生成した時間帯」を保存し、
+   画面を開いたときに時間帯が変わっていた場合のみ API を叩く。
+   ログインしていなければ生成しない。 */
+const slot = (h => h<11 ? 'morning' : h<18 ? 'afternoon' : 'night')(new Date().getHours());
+const LABEL = {morning:'おはよう', afternoon:'こんにちは', night:'おやすみ'};
+document.getElementById('gt').textContent = LABEL[slot];
+// 実装時:
+//   const last = localStorage.getItem('buddy.greet.slot');
+//   const lastAt = Number(localStorage.getItem('buddy.greet.at')||0);
+//   const gapDays = (Date.now()-lastAt)/864e5;
+//   if (isLoggedIn && (last !== slot || gapDays >= 3)) {
+//     // gapDays>=3 なら「久しぶり」の文脈をプロンプトに足す
+//     fetchGreeting({slot, gapDays, userName, recentActivity});
+//   } else { 前回の文面をそのまま表示（トークン消費なし） }
+</script>
+</body></html>
